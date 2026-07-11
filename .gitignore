@@ -1,0 +1,10 @@
+.env
+__pycache__/
+*.pyc
+data/raw/
+data/cache/
+data/index/
+data/kb_clean.csv
+data/eval_prompts.csv
+eval/logs/
+.DS_Store
