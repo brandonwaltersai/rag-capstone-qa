@@ -45,12 +45,12 @@ Full methodology and how to reproduce: [`docs/results.md`](docs/results.md).
 
 ## What this demonstrates
 
-This project sits at the intersection I work in as a consultant: **AI systems
-don't fail on the model — they fail on the governance wrapped around it.**
-The interesting engineering here isn't the retrieval or the prompt, it's the
-citation hard-gate and the safety-trigger-before-retrieval ordering — the
-parts that make the system safe to actually deploy in a support workflow
-rather than just demo well.
+This project sits at the intersection of applied AI engineering and reliable
+AI system design: **AI systems don't fail only on the model — they fail on the
+governance and controls wrapped around it.** The interesting engineering here
+isn't the retrieval or the prompt, it's the citation hard-gate and the
+safety-trigger-before-retrieval ordering — the parts that make the system safe
+to actually deploy in a support workflow rather than just demo well.
 
 ## Project structure
 
@@ -86,4 +86,4 @@ Python · OpenAI (`text-embedding-3-small`, `gpt-4.1`) · FAISS · pandas
 
 ## Author
 
-Brandon Walters — [LinkedIn](https://linkedin.com/in/brandon-walters-172b29208)
+Brandon Walters — [LinkedIn](https://www.linkedin.com/in/bw172b29208/)
