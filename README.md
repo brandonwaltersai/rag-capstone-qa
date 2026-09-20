@@ -45,12 +45,9 @@ Full methodology and how to reproduce: [`docs/results.md`](docs/results.md).
 
 ## What this demonstrates
 
-This project sits at the intersection of applied AI engineering and reliable
-AI system design: **AI systems don't fail only on the model — they fail on the
-governance and controls wrapped around it.** The interesting engineering here
-isn't the retrieval or the prompt, it's the citation hard-gate and the
-safety-trigger-before-retrieval ordering — the parts that make the system safe
-to actually deploy in a support workflow rather than just demo well.
+This project reflects the intersection of AI engineering, governance, and operational
+deployment — building systems that can state what they know, show where it came from,
+and stop when the evidence runs out.
 
 ## Project structure
 
