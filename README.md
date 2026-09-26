@@ -16,38 +16,46 @@ That's an operational, legal, and reputational risk, not just a quality one.
 ## The approach
 
 Rather than trusting the model to "know when it doesn't know," the system
-makes ungrounded answers structurally impossible:
+makes ungrounded answers structurally difficult to return:
 
 1. **Retrieve** top-k evidence from a FAISS index over a curated, lane-tagged
    knowledge base (17,880 entries), with a hybrid vector + lexical rerank.
 2. **Generate** an answer constrained to that evidence only — the prompt
    explicitly instructs the model to treat retrieved text as read-only and to
-   ignore any instructions embedded inside it (a basic prompt-injection
-   defense, since KB content is technically user-influenceable data).
+   ignore any instructions embedded inside it.
 3. **Hard-gate on citations** — if the response is missing citations, or cites
    a KB_ID that wasn't actually retrieved, the turn is escalated instead of
-   returned. The model cannot talk its way past this gate; it's a code check,
-   not a prompt instruction.
+   returned. This is enforced in code rather than left to prompt compliance.
 4. **Escalate before generation** whenever the query matches a safety trigger
-   (payment details, SSNs, government IDs) or falls outside the two
-   supported lanes — no LLM call happens on that path at all.
+   or falls outside the two supported lanes.
 
-Every escalation produces a structured handoff ticket (reason, top evidence,
-clarifying questions) — not a dead end for the customer.
+Every escalation produces a structured handoff ticket with the reason,
+supporting evidence, and clarifying questions rather than a dead end.
 
-## Results
+## Final evaluation
 
-| Grounded Answer Rate | Escalation Appropriateness | Retrieval Coverage | Mean Latency |
-|---:|---:|---:|---:|
-| 100% | 88.3% | 96.7% | 1.95s |
+The final evaluation run used **120 prompts** across the supported lanes.
 
-Full methodology and how to reproduce: [`docs/results.md`](docs/results.md).
+| Metric | Result |
+|---|---:|
+| Answers | 107 |
+| Escalations | 13 |
+| Grounded Answer Rate | **100%** |
+| Retrieval Coverage | **98.3%** |
+| Escalation Appropriateness | **89.2%** |
+| Mean Latency | **2.00s** |
+| p95 Latency | **3.01s** |
+
+Escalation reasons in the final run were: 6 missing/invalid-citation cases,
+5 weak-evidence/model escalations, and 2 safety escalations.
+
+Full methodology and reproduction notes: [`docs/results.md`](docs/results.md).
 
 ## What this demonstrates
 
-This project reflects the intersection of AI engineering, governance, and operational
-deployment — building systems that can state what they know, show where it came from,
-and stop when the evidence runs out.
+This project reflects the intersection of AI engineering, governance, and
+operational deployment — building systems that can state what they know,
+show where it came from, expose uncertainty, and stop when the evidence runs out.
 
 ## Project structure
 
@@ -79,7 +87,7 @@ python -m eval.run_eval
 
 ## Stack
 
-Python · OpenAI (`text-embedding-3-small`, `gpt-4.1`) · FAISS · pandas
+Python · OpenAI · FAISS · pandas · pytest
 
 ## Author
 
